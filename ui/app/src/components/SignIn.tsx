@@ -23,17 +23,27 @@ const SignIn = () => {
   const handleLogin = (e: any) => {
     e.preventDefault();
     if(email && password){
-        dispatch<any>(login(email, password))
-        .then(() => {
-          alert("Logged in successfully!")
-          navigate("/dashboard");
-          window.location.reload();
-        })
-        .catch((err: any) => {
-          console.log(err)
-        });
+        const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+        if (!emailRegex.test(email)) {
+          alert("Email is not valid")
+          setEmail("");
+          setPassword("");
+        } else {
+          dispatch<any>(login(email, password))
+          .then(() => {
+            alert("Logged in successfully!")
+            navigate("/dashboard");
+            window.location.reload();
+          })
+          .catch((err: any) => {
+            console.log(err);
+            alert("Something went wrong");
+          });
+        }
     } else {
-        alert("Please fill both fields")
+        alert("Please fill both fields");
+        setEmail("");
+        setPassword("");
     }
   }
 
@@ -53,6 +63,7 @@ const SignIn = () => {
               </label>
               <input
                   type="email"
+                  value={email}
                   onChange={onChangeEmail}
                   className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
@@ -66,6 +77,7 @@ const SignIn = () => {
               </label>
               <input
                   type="password"
+                  value={password}
                   onChange={onChangePassword}
                   className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />

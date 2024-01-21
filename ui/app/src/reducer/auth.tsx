@@ -2,7 +2,6 @@ import {actionTypes} from "../actions/types";
   
   
   const user = JSON.parse(localStorage.getItem("user") as string);
-  console.log(user, 'i m user')
   
   const initialState = user 
     ? { isLoggedIn: true, user }
@@ -10,7 +9,6 @@ import {actionTypes} from "../actions/types";
   
   export default function auth (state = initialState, action: any) {
     const { type, payload } = action;
-    console.log(type,payload,"hey");
   
     switch (type) {
       case actionTypes.REGISTER_SUCCESS:
